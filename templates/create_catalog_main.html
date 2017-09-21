@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block html %}
+<div class="row">
+	<div class="col-sm-4 col-md-4 col-lg-4 col-md-offet-4 col-lg-offset-4 col-sm-offset-4 message_container">
+			{% with messages = get_flashed_messages() %}
+		    {% if messages %}
+			{% for items in messages %}
+			<div class="messages">{{items}}</div>
+			{% endfor%}
+			{% endif %}
+			{% endwith %}
+	</div>
+</div>	
+<div class="row">
+	<div class="col-md-4 col-lg-4 col-sm-4 col-md-offset-4 col-lg-offset-4 col-sm-offfset-4">
+		<h1 class="heading_create_item panel panel-default">Create a category</h1>
+		<form action="{{url_for("add_category")}}" id="category-form" method="post">
+			<fieldset id="category_form">
+				<div class="form-group">
+					<label for="ct_name">Enter Name for Category</label>
+					<input type="text" class="form-control" id="ct_name" name="ct_name">
+				</div>
+				<div class="form-group">
+					<label for="ct_image">Copy and paste a image link of your Category</label>
+					<input type="text" class="form-control" id="ct_image" name="ct_image">
+				</div>
+					<button type="submit" class="btn btn-primary">Create</button>
+			</fieldset>
+		</form>
+	</div>
+	<div class="col-md-4 col-lg-4 col-sm-4 col-md-offset-4 col-lg-offset-4 col-sm-offfset-4">
+		<h1 class="heading_create_item panel panel-default">Create a  item</h1>
+		<form action="{{url_for("add_category_item")}}"  id="item-form" method="post">
+			<fieldset id="item_form">
+				<div class="form-group">
+					<label for="item_name">Enter Name for Catalog Item</label>
+					<input type="text" class="form-control" id="item_name" name="item_name">
+				</div>
+				<div class="form-group">
+					<label for="item_category">Enter a category</label>
+					<select class="form-control" id="item_category" name="item_category"></select>
+				</div>
+				<div class="form-group">
+					<label for="item_description">Enter Description</label>
+					<input class="form-control" id="item_description" name="item_description">
+				</div>
+				<div class="form-group">
+					<label for="item_image">Copy and paste a image link of your item</label>
+					<input class="form-control" id="item_image" name="item_image">
+				</div>
+					
+					<button type="submit" class="btn btn-primary">Create</button>
+			</fieldset>
+		</form>
+	</div>
+</div>
+{% endblock %}

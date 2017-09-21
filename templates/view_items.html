@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block html %}
+<div class="col-md-4 col-lg-4 col-sm-4 col-md-offset-4 col-lg-offset-4 col-sm-offfset-4">
+	<div class="content">
+		<div class="display_item_name">{{RESULT[0].name}}</div>
+		<div class="item_description">{{RESULT[0].description}}</div>
+		<img  class="item_image" src="{{RESULT[0].image}}">
+	 <div class="creator">Created By:{{RESULT[0].user.name}}</div>
+	 <div class="created_date">Created date:{{RESULT[0].created_date.date()}}</div>
+		</div>
+	{% if session["edit_auth"] %}
+	<ul class="edit_del_ul">
+			<li>
+				<a href={{url_for("edit_catalog_item",catalog_item=RESULT[0].name)}}>
+					<button class="btn btn-primary">Edit</button>
+				</a>
+			</li>
+			<li>
+				<form action={{url_for(".delete_item",item_name=RESULT[0].name)}} method="post">
+					<input name="item_name" value={{RESULT[0].name}} id="hidden_del_input">
+					<button class="btn btn-primary" type="submit">Delete</button>
+				</form>
+			</li>
+	</ul>
+	{% else %}
+	{% endif %}
+{% endblock %}

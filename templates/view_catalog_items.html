@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block html %}
+		<div class="row">
+		    <div class=" col-lg-offset-2 col-md-offset-2 col-sm--offset-2 col-sm-8 col-md-8 col-lg-8">
+				<div class="catalog-container">
+				{% if RESULT %}
+					<h3 class="catalog-header">{{RESULT[0].catalog.name}}</h3>
+					{% for items in RESULT %}
+					<div class ="item_container">
+						<a href={{url_for("view_items",category=items.catalog.name,catalog_item=items.name,owner=items.user.id)}}>
+							<img class="category_image" src="{{items.image}}" alt="{{items.name}}">
+							<li>{{items.name}}({{items.catalog.name}})</li>
+						</a>
+					</div>
+					{% endfor %}
+					{% else %}
+					<h3 class="catalog-header center">No Items added yet.
+						{% if session.username %}
+						{% else %}
+						<br>Please log in to add items.<br>
+						{% endif %}
+					{% endif %}
+				</div>
+			</div>
+		</div>
+{% endblock %}

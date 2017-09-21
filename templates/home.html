@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+        {% block state %}
+        <div id="template-data" data-state={{STATE|tojson}}></div>
+        {% endblock %}
+        {% block navbar_right %}
+        <li>
+			<a href="{{url_for("create_catalog_main")}}">
+				<button class="btn btn-primary">Add Category</button>
+			</a>
+		</li>
+		<li>
+			<a href="{{url_for("create_catalog_main")+"#item-form"}}">
+				<button class="btn btn-primary">Add Items</button>
+			</a>
+		</li>
+        {% endblock %}
+		{% block html %}
+		<div class="row">
+			<div class="col-sm-4 col-md-4 col-lg-4 col-md-offet-4 col-lg-offset-4 col-sm-offset-4 message_container">
+					{% with messages = get_flashed_messages() %}
+				    {% if messages %}
+					{% for items in messages %}
+					<div class="messages">{{items}}</div>
+					{% endfor%}
+					{% endif %}
+					{% endwith %}
+			</div>
+		</div>
+		</div>
+
+		<div class="row">
+			<section class="categories">
+			    <div class="col-sm-12 col-md-12 col-lg-6">
+					<div class="catalog-container">
+						<div class="catalog-header">Categories</div>
+						{% if catalog_results  %}
+							{% for items in catalog_results %}
+							<div class="item_container">
+								<a href={{url_for("view_all_items",category=items.name)}}>
+								<img class="category_image" src={{items.image}} alt={{items.image}}>
+								<li>{{items.name}}</li></a>
+						   </div>
+							{% endfor %}
+						    {% else %}
+							<div>No categories Available</div>
+							{% endif %}
+					</div>
+			    </div>
+			</section>
+		<section class="items">
+		    <div class="col-sm-12 col-md-12 col-lg-6 right-float">
+			    <div class="catalog-container-items">
+					<div class="catalog-header">Latest Items</div>
+					{% if LATEST %}
+					{% for items in LATEST %}
+					<div class="item_container">
+						<a href={{url_for("view_items",category=items.catalog.name,catalog_item=items.name,owner=items.user.id)}}>
+						<img class="item_image_main_page" src={{items.image}} alt={{items.image}}>
+						<span><li> {{items.name}} ({{items.catalog.name}})</li></span>
+						</a>
+					</div>
+					{% endfor %}
+					{% else %}
+					<div>No items Available</div>
+					{% endif %}
+			</div>
+		</div>
+	    </section>
+	</div>
+
+
+		{% endblock %}
