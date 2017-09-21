@@ -37,7 +37,7 @@
 							{% for items in catalog_results %}
 							<div class="item_container">
 								<a href={{url_for("view_all_items",category=items.name)}}>
-								<img class="category_image" src={{items.image}} alt={{items.image}}>
+								<img class="category_image" src={{items.image}} alt={{items.name}}>
 								<li>{{items.name}}</li></a>
 						   </div>
 							{% endfor %}

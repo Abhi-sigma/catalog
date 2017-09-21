@@ -163,6 +163,28 @@ def get_all_json():
     return json.dumps([items.serialize for items in result])
 
 
+@app.route("/catalog/<category>/json", methods=["GET"])
+def view_all_items_json(category):
+    try:
+        query = session.query(Catalog).filter(Catalog.name == category).all()
+        result = session.query(Catalog_Item).filter(
+                               Catalog_Item.catalog.has(name=category)).all()
+        if len(query) > 0:
+            if len(result) > 0:
+                dict_category = {}
+                list_of_items = []
+                for items in result:
+                    list_of_items.append(items.name)
+                dict_category[category] = list_of_items
+                return json.dumps(dict_category)
+            else:
+                return json.dumps("Category is empty.Please login to add one")
+        else:
+            return json.dumps("Category not found.Please login to add one")
+    except:
+        return make_response("Error", 401)
+
+
 @app.route("/del/<category>/")
 @login_required
 def del_category(category):
@@ -259,9 +281,9 @@ def delete_item(item_name):
 def view_all_items(category):
     result = session.query(Catalog_Item).filter(
                            Catalog_Item.catalog.has(name=category)).all()
-    for items in result:
-        parent = items.catalog.name
-        app.logger.info(parent)
+    # for items in result:
+    #     parent = items.catalog.name
+    #     app.logger.info(parent)
     return render_template("view_catalog_items.html", RESULT=result)
 
 
@@ -321,8 +343,9 @@ def fbconnect():
         Due to the formatting for the result from the server token exchange
         we have tosplit the token first on commas and select the first index
         which gives us the key : valuefor the server access token then we split
-        it on colons to pull out the actual token value and replace the remaining
-        quotes with nothing so that it can be used directly in the graph
+        it on colons to pull out the actual token value and replace the
+        remaining quotes with nothing so that it can be used directly in
+        the graph
         api calls
     '''
     token = result.split(',')[0].split(':')[1].replace('"', '')
@@ -517,7 +540,7 @@ def gdisconnect():
     else:
         login_session.clear()
         response = make_response(json.dumps(
-                                 'Failed to revoke token for given user.', 400))
+                  'Failed to revoke token for given user.', 400))
         response.headers['Content-Type'] = 'application/json'
         flash("Succesfully Signed Out")
         return redirect(url_for("home_page"))
@@ -526,4 +549,4 @@ def gdisconnect():
 app.secret_key = 'jkjko90890898'
 
 
-app.run(debug='true', port=8000)
+app.run(debug='true')

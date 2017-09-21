@@ -3,7 +3,8 @@
 
 This is the fourth project and is a requirement for  Udacity Full Stack Developers Nanodegree.The project uses python on
 the backend with flask framework and sql lite as the database.Flask Sql Alchemy is used for manipulating databases.
-
+The project requires a login system using third party apis, create,edit and delete functions when logged in,json endpoints
+and implements local permission systems.for eg:only creator of a item can modify or delete a project.
 
 
 ## Running the Project:
@@ -14,7 +15,7 @@ Requirements:
 + **Bash terminal(for windows machine)**
 
 
-Installation:
+## Installation:
 (Recommended Method)
 
 1. If you are using a Mac or Linux system, your regular terminal program will do just fine.On Windows,
@@ -48,26 +49,46 @@ Inside, you will find another directory called vagrant. Change directory to the 
 
 7. change directory to `cd /vagrant/`
 
+8. cd into vagrant directory and type `git clone https://github.com/Abhi-sigma/catalog`.
 
-9. Load the data by typing `psql -d news -f newsdata.sql`.This will create 'news' database and three tables 'articles','authors' and 'log'.
-'
-10. Quit the psql prompt by typing `\q` or pressing <kbd>CTRL</kbd> + <kbd>D</kbd>
-
-11. cd into vagrant directory and type `git clone https://github.com/Abhi-sigma/logs-analysis'.
-This will clone the logs-analysis git diretory into the vagrant directory.cd into this directory and type `python queries.py`.If everything in followed
-exactly from above steps,you will see output in terminal as in output.txt file in logs-analysis directory.
+This will clone the catalog git diretory into the vagrant directory.cd into this directory and type `python main.py`.If everything in followed
+in correct order,you will be able to run the project by typing `http://localhost:5000`.At this instance,the database is empty.Now,
+to test the project we have two options.
 
 
-## About SQL VIEWS
+### 1.Run the tester.py
+  When this python file is run,it connects to database seperately and inserts user "test1" and category
+  "Bedroom" and items "Chairs","Tables" and "Bed" under the Bedroom category and makes user test1 as the owner of these database entries.
+  You will be able to see that you cant modify items created by test1.Now,you can add your own items and category and observe
+  that you can modify and delete the items that you have created.When you want to remove the items and user created by
+  test1,run the tester.py again.It will simply delete everything related to user test1 including itself.Read through the tester.py
+  documentation and comments to learn more how it works.
 
-SQL Views have been used but you dont have to worry about setting them manually.The queries.py script takes care of that.Namely,two views
-requests and popular_articles are created, just so you know.You can check them out by connecting to news database at psql prompt and using select statements once you run the script.
+  <strong>Caution:When you run tester.py second time,it will delete Bedroom category,so if you have added anything in
+  that category,it will be deleted too. </strong>
 
+  <strong>Caution:Your local flask server may stop when you run tester.py so if you get error in connection,try running the main.py again.</strong>
 
+ ### 2.Login to both facebook and google:
+ Your email id is your identification when you create anything in catalog website.The facebook login api doesnt let access email
+ when running from local host.So,in development,if you login by facebook your email id is saved as "user name"+@test.com.So even
+ if you have same email id for both facebook and google,you are two different users.That code needs to be changed before deploying
+ and then if you have same email address for facebook and google,you are the same person.
 
+ ## JSON endpoints
+ The catalog web api exposes three json endpoints namely:
 
+ + host/catalog/json:
+ This json enpoint returns all the items present in catalog_item table along with the catalog name from where it belongs.
 
+ + host/get_all_categories
+ This json endpoint exposes all the categories with their respective id.
 
+ +host/catalog/<category>/json
+ 	This json enpoint returns all the items from a category.
+ 	For eg:localhost:5000/catalog/Bedroom/json will return all the items in Bedroom.
+**replace host with localhost:5000 if you are following the instructions and no changes made in running the app.for e.g
+localhost:5000/catalog/Bedroom/json**
 
 
 
