@@ -32,16 +32,23 @@ db_object = {"User":
               ], "category_items": [
                                     {"Bed": [{"id": 1},
                                      {"image":
-                                      "http://content.blueport.com/ProductImages/0/332756.jpg"}]},
+                                      "http://content.blueport.com" +
+                                      "/ProductImages/0/332756.jpg"}]},
                                     {"Tables": [{"id": 2},
                                      {"image":
-                                      "http://www.ikea.com/PIAimages/0470421_PE612777_S5.JPG"}]},
+                                      "http://www.ikea.com" +
+                                      "/PIAimages/0470421_PE612777_S5.JPG"}]},
                                     {"Chairs": [{"id": 3},
                                      {"image":
-                                      "http://www.ikea.com/PIAimages/0105948_PE253720_S5.JPG"}]}
-                                    ], "category": [{"Bedroom": [{"id": 1},
-                                                    {"image": "http://www.ikea.com/ms/media/cho_room/20171/sleeping/20171_cosl06a/20171_cosl06a_01_PH137675.jpg"}]}
-                                                    ]
+                                      "http://www.ikea.com" +
+                                      "/PIAimages/0105948_PE253720_S5.JPG"}]}
+                                    ], "category": [
+                                    {"Bedroom": [{"id": 1},
+                                     {"image":
+                                     ("http://www.ikea.com/ms/media/cho_room"
+                                      "/20171/sleeping/20171_cosl06a/"
+                                      "20171_cosl06a_01_PH137675.jpg")}]}
+                               ]
              }
 
 

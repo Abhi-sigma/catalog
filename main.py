@@ -185,6 +185,20 @@ def view_all_items_json(category):
         return make_response("Error", 401)
 
 
+# endpoint that returens itemised json for individual item
+@app.route("/<item>/json", methods=["GET"])
+def view_item_json(item):
+    try:
+        query = session.query(Catalog_Item).filter(
+                          Catalog_Item.name == item).all()
+        if len(query) > 0:
+            return json.dumps([items.serialize for items in query])
+        else:
+            return json.dumps("Not found")
+    except:
+        make_response("Error", 404)
+
+
 @app.route("/del/<category>/")
 @login_required
 def del_category(category):
@@ -333,8 +347,10 @@ def fbconnect():
         'web']['app_id']
     app_secret = json.loads(
         open('fb_client_secrets.json', 'r').read())['web']['app_secret']
-    url = 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=%s&client_secret=%s&fb_exchange_token=%s' % (
-        app_id, app_secret, access_token)
+    url = ('https://graph.facebook.com/oauth/access_token?'
+           'grant_type=fb_exchange_token&client_id=%s'
+           '&client_secret=%s&fb_exchange_token=%s'
+           % (app_id, app_secret, access_token))
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
     # Use token to get user info from API
@@ -349,7 +365,8 @@ def fbconnect():
         api calls
     '''
     token = result.split(',')[0].split(':')[1].replace('"', '')
-    url = 'https://graph.facebook.com/v2.8/me?access_token=%s&fields=name,id,email' % token
+    url = ('https://graph.facebook.com/v2.8/me?' +
+           'access_token=%s&fields=name,id,email' % token)
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
     # print "url sent for API access:%s"% url
@@ -359,12 +376,13 @@ def fbconnect():
     login_session['provider'] = 'facebook'
     login_session['username'] = data["name"]
     # no email key in response,temporary hack
-    login_session['email'] = data["name"]+"@test.com"
+    login_session['email'] = data["name"] + "@test.com"
     login_session['facebook_id'] = data["id"]
     # The token must be stored in the login_session in order to properly logout
     login_session['access_token'] = token
     # Get user picture
-    url = 'https://graph.facebook.com/v2.8/me/picture?access_token=%s&redirect=0&height=200&width=200' % token
+    url = ('https://graph.facebook.com/v2.8/me/picture' +
+           '?access_token=%s&redirect=0&height=200&width=200' % token)
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
     data = json.loads(result)
@@ -388,7 +406,8 @@ def fbdisconnect():
     facebook_id = login_session['facebook_id']
     # The access token must me included to successfully logout
     access_token = login_session['access_token']
-    url = 'https://graph.facebook.com/%s/permissions?access_token=%s' % (facebook_id, access_token)
+    url = ('https://graph.facebook.com/%s/permissions?access_token=%s'
+           % (facebook_id, access_token))
     h = httplib2.Http()
     result = h.request(url, 'DELETE')[1]
     del login_session['access_token']
