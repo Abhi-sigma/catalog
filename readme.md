@@ -91,7 +91,6 @@ to test the project we have two options.
  	This json enpoint returns all the items from a category.
  	For eg:localhost:5000/catalog/Bedroom/json will return all the items in Bedroom.
 
-#Running the App
 **replace host with localhost:5000 
 if you are following the instructions and no changes made in running the app.for e.g
 localhost:5000/catalog/Bedroom/json**
