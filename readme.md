@@ -84,9 +84,14 @@ to test the project we have two options.
  + host/get_all_categories
  This json endpoint exposes all the categories with their respective id.
 
+ + host/<item>/json
+ This json endpoint exposes the item with their respective catalog.
+
  + host/catalog/<category>/json
  	This json enpoint returns all the items from a category.
  	For eg:localhost:5000/catalog/Bedroom/json will return all the items in Bedroom.
+
+#Running the App
 **replace host with localhost:5000 if you are following the instructions and no changes made in running the app.for e.g
 localhost:5000/catalog/Bedroom/json**
 
